@@ -19,17 +19,21 @@
 
 require_once '../library.php';
 
-$email = mysqli_real_escape_string($dbh, $email);
-$password = mysqli_real_escape_string($dbh, hash_password($password));
+$email = mysqli_real_escape_string($conn, $email);
+$password = mysqli_real_escape_string($conn, hash_password($password));
+$conn = get_database_connection();
+
+// $sql = <<<SQL
+// INSERT INTO users (user_email, user_password) VALUES('lsiew23@hanoverstudents.org', 'password');
 
 $sql = <<<SQL
-SELECT id, display_name
-  FROM user
- WHERE email = '{$email}'
-   AND password = '{$password}'
+SELECT user_email, user_password
+FROM users
+WHERE user_email = '{$email}'
+AND user_password = '{$password}'
 SQL;
 
-$result = mysqli_query($dbh, $sql);
+$result = mysqli_query($conn, $sql);
 
 $count = mysqli_num_rows($result);
 if ($count == 1)
@@ -38,12 +42,8 @@ if ($count == 1)
 
     session_start();
 
-    $_SESSION['userId'] = $row['id'];
-    $_SESSION['displayName'] = $row['display_name'];
-    $_SESSION['ssoProvider'] = null;
+    $_SESSION['userId'] = $row['user_id'];
     $_SESSION['authenticated'] = true;
-
-    // load_progress(get_default_challenge_year());
 
     session_write_close();
 
@@ -52,4 +52,7 @@ if ($count == 1)
 else
 {
     http_response_code(401);
-} -->
+}
+$conn->close();
+
+header('Location: index.php?content=order');

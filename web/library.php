@@ -45,3 +45,10 @@ function get_database_connection()
 
     return $conn;
 }
+
+session_start();
+
+function hash_password($password)
+{
+    return '*' . strtoupper(hash('sha1', hex2bin(hash('sha1', $password))));
+}

@@ -35,9 +35,8 @@
     // Build the SELECT statement
     $sql = <<<SQL
     SELECT ord_id, ord_date, ord_name, ord_email, ord_type, ord_slice_quantity
-           GROUP_CONCAT(CONCAT(par_name, ' - ', pka_name) ORDER BY pka_name SEPARATOR '<br>') as field_list
       FROM orders
-     ORDER BY app_date, ord_name, ord_id
+     ORDER BY ord_date, ord_name, ord_id
     SQL;
 
     // Execute the query and save the results
@@ -53,7 +52,8 @@
         echo '<td>' . (new DateTimeImmutable($row['ord_date']))->format('n/j/Y') . '</td>';
         echo '<td>' . $row['ord_name'] . '</td>';
         echo '<td><a href="mailto:'. $row['ord_email'] . '">' . $row['ord_email'] . '</a></td>';
-        // echo '<td>' . $row['field_list'] . '</td>';
+        echo '<td>' . $row['ord_type'] . '</td>';
+        echo '<td>' . $row['ord_slice_quantity'] . '</td>';
         echo '</tr>';
 
         $empty = false;
