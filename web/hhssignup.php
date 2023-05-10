@@ -1,5 +1,5 @@
 <?php
-
+$conn = get_database_connection();
 /*************************************************************************************************
  * register.php
  *
@@ -57,7 +57,7 @@ function register() {
     } else {
         var settings = {
             'async': true,
-            'url': 'api/createAccount.php?email=' + $('#email').val() + '&password=' + $('#password').val(),
+            'url': 'api/hhsaccount.php?email=' + $('#email').val() + '&password=' + $('#password').val(),
             'method': 'POST',
             'headers': {
                 'Cache-Control': 'no-cache'
@@ -67,11 +67,11 @@ function register() {
         $('#registerButton').prop('disabled', true);
 
         $.ajax(settings).done(function(response) {
-            showAlert('success', 'Account Registered!', 'We\'ve sent you an email to verify your address. Continue to the <a href="index.php?content=login">login page</a> to get started.');
+            alert('success', 'Account Registered!', 'We\'ve sent you an email to verify your address. Continue to the <a href="index.php?content=login">login page</a> to get started.');
             setTimeout(function() { window.location.replace('index.php?content=login'); }, 5000);
         }).fail(function(jqXHR) {
             if (jqXHR.status == 400) {
-                showAlert('danger', 'Email Taken!', 'This email address has been used already. Do you need to <a href="index.php?content=passwordRecovery">reset the password</a>?');
+                alert('danger', 'Email Taken!', 'This email address has been used already. Do you need to <a href="index.php?content=passwordRecovery">reset the password</a>?');
             } else if (jqXHR.status == 409) {
                 showAlert('warning', 'Sign In With Google!', 'This email address uses Google sign-in. Click the "Sign in with Google" button on the <a href="index.php?content=login">login page</a>.');
             } else {

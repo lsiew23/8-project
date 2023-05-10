@@ -20,7 +20,8 @@
  *************************************************************************************************/
 
 require_once '../library.php';
-
+echo "hello1";
+$conn = get_database_connection();
 $to = $email; // Save original, unescaped email address
 $email = mysqli_real_escape_string($conn, $email);
 $password = mysqli_real_escape_string($conn, hash_password($password));
@@ -31,8 +32,7 @@ SELECT id,
  WHERE user_email = '{$email}'
 SQL;
 
-$result = mysqli_query($dbh, $sql);
-
+$result = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($result);
 if ($count == 0)
 {

@@ -1,4 +1,5 @@
 <?php
+$conn = get_database_connection();
 
 /*************************************************************************************************
  * login.php
@@ -63,7 +64,7 @@ function login() {
     } else {
         var settings = {
             'async': true,
-            'url': 'api/authenticate.php?email=' + $('#email').val() + '&password=' + $('#password').val(),
+            'url': 'api/hhsauthenticate.php?email=' + $('#email').val() + '&password=' + $('#password').val(),
             'method': 'POST',
             'headers': {
                 'Cache-Control': 'no-cache'
@@ -86,7 +87,7 @@ function login() {
     $('#loginButton').prop('disabled', true);
 
     $.ajax(settings).done(function(response) {
-        window.location.replace('index.php?content=menu');
+        window.location.replace('index.php?content=order');
     }).fail(function() {
         showAlert('danger', 'Authentication Error!', 'There was a problem authenticating your account with Google.');
     }).always(function() {

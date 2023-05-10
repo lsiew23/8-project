@@ -55,4 +55,4 @@ else
 }
 $conn->close();
 
-header('Location: index.php?content=order');
+// header('Location: index.php?content=order');
