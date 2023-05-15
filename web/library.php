@@ -8,6 +8,7 @@
  *************************************************************************************************/
 error_Reporting(0);
 extract($_REQUEST);
+session_start();
 
 /*
  * Returns the content to be included based on the 'content' request parameter, if present.
@@ -46,7 +47,6 @@ function get_database_connection()
     return $conn;
 }
 
-session_start();
 
 function hash_password($password)
 {

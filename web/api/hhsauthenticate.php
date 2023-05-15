@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 
 /*************************************************************************************************
  * authenticate.php
@@ -16,26 +16,19 @@
  * - 200 if the credentials were authenticated successfully
  * - 401 if the credentials could not be authenticated
  *************************************************************************************************/
-
 require_once '../library.php';
-
+$conn = get_database_connection();
 $email = mysqli_real_escape_string($conn, $email);
 $password = mysqli_real_escape_string($conn, hash_password($password));
-$conn = get_database_connection();
-
-// $sql = <<<SQL
-// INSERT INTO users (user_email, user_password) VALUES('lsiew23@hanoverstudents.org', 'password');
-
 $sql = <<<SQL
-SELECT user_email, user_password
+SELECT user_id, user_email, user_password
 FROM users
 WHERE user_email = '{$email}'
 AND user_password = '{$password}'
 SQL;
-
 $result = mysqli_query($conn, $sql);
-
 $count = mysqli_num_rows($result);
+
 if ($count == 1)
 {
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -55,4 +48,4 @@ else
 }
 $conn->close();
 
-// header('Location: index.php?content=order');
+header('Location: ../index.php?content=order');

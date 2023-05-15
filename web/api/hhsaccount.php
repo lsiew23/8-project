@@ -20,50 +20,45 @@
  *************************************************************************************************/
 
 require_once '../library.php';
-echo "hello1";
 $conn = get_database_connection();
 $to = $email; // Save original, unescaped email address
 $email = mysqli_real_escape_string($conn, $email);
 $password = mysqli_real_escape_string($conn, hash_password($password));
-
 $sql = <<<SQL
-SELECT id, 
+SELECT user_id 
   FROM users
  WHERE user_email = '{$email}'
 SQL;
-
 $result = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($result);
-if ($count == 0)
+if ($count == 0 )
 {
     $sql = <<<SQL
     INSERT INTO users (user_email, user_password)
     VALUES ('{$email}', '{$password}')
 SQL;
 
-    // if (mysqli_query($dbh, $sql))
-    // {
-    //     send_verification_code($to);
-
-    //     http_response_code(200);
-    // }
-    // else
-    // {
-    //     http_response_code(500);
-    // }
-}
-else
-{
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-    if ($row['sso_google_id'] == '')
+    if (mysqli_query($conn, $sql))
     {
-        // Email already in use
-        http_response_code(400);
+        http_response_code(200);
     }
     else
     {
-        // The account uses SSO
-        http_response_code(409);
+        http_response_code(500);
     }
 }
+// else
+// {
+//     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+//     if ($row['sso_google_id'] == '')
+//     {
+//         // Email already in use
+//         http_response_code(400);
+//     }
+//     else
+//     {
+//         // The account uses SSO
+//         http_response_code(409);
+//     }
+// }

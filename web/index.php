@@ -11,6 +11,7 @@
  *************************************************************************************************/
 
 include('library.php');
+// print_r($_SESSION);
 
 ?>
 <!DOCTYPE html>
@@ -24,37 +25,37 @@ include('library.php');
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         
+
         <title>Hanover Cyber Hawks</title>
     </head>
 
     <body>
-        <!-- <div class="container">
-
-        </div> -->
-        <!-- Navigation -->
         <div>
             <nav class="navbar navbar-expand-lg bg-dark-subtle">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.php">HHScyberhawks.com</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarText">
+                    <!-- <a class="navbar-brand" href="index.php">HHScyberhawks.com</a> -->
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link <?php print($content == 'slideshow' ? 'active' : ''); ?>" href="index.php?content=slideshow">HHS Cyber Hawks</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link <?php print($content == 'about' ? 'active' : ''); ?>" href="index.php?content=about">About</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link <?php print($content == 'order' ? 'active' : ''); ?>" href="index.php?content=order">Order Pizza</a>
-                            </li>
-                        </ul>
-                    </div>
 
+                            <?php if(isset($_SESSION['userId'])) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php print($content == 'order' ? 'active' : ''); ?>" href="index.php?content=order">Order Pizza</a>
+                                </li>
+                            <?php endif ?>
+                            
+                        </ul>
                     <a class="text-decoration-none" <?php print($content == 'login' ? 'active' : ''); ?>" href="index.php?content=login">Login</a>
                     <!-- <a href="index.php?content=login" class="text-decoration-none"><h1>login</h1></a> -->
 
                 </div>
             </nav>
+
         </div>
 
         <!-- Main Content -->
